@@ -2,6 +2,7 @@
 const express = require('express')
 const app = express()
 const methodOverride = require('method-override')
+require('dotenv').config();
 
 app.use(methodOverride('_method')) 
 app.use(express.static(__dirname + '/public'))  // css 파일을 server에 등록하는 과정 (css,js,jpg 를 (static 파일이라 부른다))
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: true }))
 const { MongoClient, ObjectId } = require('mongodb') // 몽고디비 연결 세팅
 
 let db
-const url = 'mongodb+srv://admin:f1w1g1ek!!@jonghwayoo.wfpmbg7.mongodb.net/?retryWrites=true&w=majority'
+const url = process.env.MONGODB_URI;
 new MongoClient(url).connect().then((client) => {
     console.log('DB연결성공')
     db = client.db('forum')
